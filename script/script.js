@@ -2,10 +2,10 @@ import init from './module/init.js';
 import createKeyBoard from './module/createKeyBoard.js';
 import { keydown, keyup, onClickKey } from './module/eventListener.js';
 
-const options = {
-  lang: 'eng',
-  shift: false,
-};
+// const options = {
+//   lang: 'eng',
+//   shift: false,
+// };
 
 init();
 
