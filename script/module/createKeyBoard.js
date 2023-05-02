@@ -10,7 +10,7 @@ const createKeyBoard = () => {
     <span class="eng-shift eng hidden">${key.keyEngShift}</span>
     <span class="rus rus-unshift hidden">${key.keyRus}</span>
     <span class="rus-shift rus hidden">${key.keyRusShift}</span>
-    </div>`
+    </div>`,
     )
     .join(' ');
 

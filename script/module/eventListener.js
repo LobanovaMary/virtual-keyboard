@@ -1,7 +1,7 @@
 let isShiftPush = false;
 
 const createKeysWhenShiftPush = () => {
-  const lang = document.querySelector('body').dataset.lang;
+  const { lang } = document.querySelector('body').dataset;
   const keys = document.querySelectorAll('.key');
   keys.forEach((k) => {
     k.querySelectorAll('span').forEach((elem) => {
@@ -16,19 +16,6 @@ const createKeysWhenShiftPush = () => {
     });
   });
 };
-// const createKeysWhenShiftUp = () => {
-//   const lang = document.querySelector('body').dataset.lang;
-//   const keys = document.querySelectorAll('.key');
-//   keys.forEach((k) => {
-//     k.querySelectorAll('span').forEach((elem) => {
-//       if (elem.classList.contains(`${lang}-unshift`)) {
-//         elem.classList.remove('hidden');
-//       } else {
-//         elem.classList.add('hidden');
-//       }
-//     });
-//   });
-// };
 
 const keydown = (event) => {
   if (event.repeat) return;
@@ -49,8 +36,8 @@ const keydown = (event) => {
       } else if (k.dataset.code === 'Space') {
         textAria.innerHTML += ' ';
       } else if (
-        k.dataset.code === 'ShiftLeft' ||
-        k.dataset.code === 'ShiftRigth'
+        k.dataset.code === 'ShiftLeft'
+        || k.dataset.code === 'ShiftRigth'
       ) {
         isShiftPush = true;
         createKeysWhenShiftPush();
@@ -60,13 +47,18 @@ const keydown = (event) => {
           isShiftPush = true;
           createKeysWhenShiftPush();
         } else {
-          isShiftPush = false;  
+          isShiftPush = false;
           createKeysWhenShiftPush();
         }
+      } else if (
+        k.dataset.code === 'ControlLeft'
+        || k.dataset.code === 'AltRight'
+        || k.dataset.code === 'ControlRight'
+      ) {
+        event.preventDefault();
       } else {
         k.querySelectorAll('span').forEach((elem) => {
-          if (!elem.classList.contains('hidden'))
-            textAria.innerHTML += elem.innerText;
+          if (!elem.classList.contains('hidden')) textAria.innerHTML += elem.innerText;
         });
       }
     }
@@ -90,7 +82,7 @@ const keyup = (event) => {
 
 const onClickKey = (event) => {
   const textAria = document.querySelector('.text-field');
-  const elCode = event.target.closest('div').dataset.code;
+  const elCode = event.target.closest('div.key').dataset.code;
   if (elCode === 'Enter') {
     textAria.innerHTML += '&#13;';
   } else if (elCode === 'Backspace') {
@@ -99,21 +91,29 @@ const onClickKey = (event) => {
     textAria.innerHTML += ' &nbsp;';
   } else if (elCode === 'Space') {
     textAria.innerHTML += ' ';
+  } else if (
+    elCode === 'ControlLeft'
+    || elCode === 'AltRight'
+    || elCode === 'ControlRight'
+  ) {
+    event.target.closest('div.key').preventDefault();
   } else if (elCode === 'ShiftLeft' || elCode === 'ShiftRight') {
     if (!isShiftPush) {
-      event.target.closest('div').classList.add('key--active');
+      event.target.closest('div.key').classList.add('key--active');
       isShiftPush = true;
       createKeysWhenShiftPush();
     } else {
-      event.target.closest('div').classList.remove('key--active');
+      event.target.closest('div.key').classList.remove('key--active');
       isShiftPush = false;
       createKeysWhenShiftPush();
     }
   } else {
-    event.target.querySelectorAll('span').forEach((elem) => {
-      if (!elem.classList.contains('hidden'))
-        textAria.innerHTML += elem.innerText;
-    });
+    event.target
+      .closest('div.key')
+      .querySelectorAll('span')
+      .forEach((elem) => {
+        if (!elem.classList.contains('hidden')) textAria.innerHTML += elem.innerText;
+      });
   }
 };
 
