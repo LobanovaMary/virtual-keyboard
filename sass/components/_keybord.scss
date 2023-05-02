@@ -42,33 +42,37 @@
 
 .backspace {
   grid-column: 14/16;
-  & > span{
+  & > span {
     font-size: 24px;
   }
 }
-.tab{
+.tab {
   grid-column: 1/3;
 }
-.enter{
+.enter {
   grid-column: 15/16;
   grid-row: 2/4;
- 
-  & > span{
+
+  & > span {
     font-size: 24px;
   }
 }
-.capsLock{
+.capsLock {
   grid-column: 1/3;
 }
-.shiftLeft{
+.shiftLeft {
   grid-column: 1/3;
 }
-.shiftRight{
+.shiftRight {
   grid-column: 14/16;
 }
-.altLeft{
+.altLeft {
   grid-column: 2/4;
 }
-.space{
+.space {
   grid-column: 4/11;
+}
+
+.hidden {
+  display: none;
 }

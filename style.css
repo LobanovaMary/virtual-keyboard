@@ -124,4 +124,8 @@ body {
   grid-column: 4/11;
 }
 
+.hidden {
+  display: none;
+}
+
 /*# sourceMappingURL=style.css.map */

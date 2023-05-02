@@ -1,4 +1,4 @@
-let isUpperCase = false;
+let isShiftDown = false;
 
 const keydown = (event) => {
   if (event.repeat) return;
@@ -19,12 +19,12 @@ const keydown = (event) => {
       } else if (k.dataset.code === 'Space') {
         textAria.innerHTML += ' ';
       } else if (
-        k.dataset.code === 'ShiftLeft'
-        || k.dataset.code === 'ShiftRigth'
+        k.dataset.code === 'ShiftLeft' ||
+        k.dataset.code === 'ShiftRigth'
       ) {
-        isUpperCase = true;
+        isShiftDown = true;
       } else {
-        textAria.innerHTML += isUpperCase
+        textAria.innerHTML += isShiftDown
           ? k.querySelector('span').innerText.toUpperCase()
           : k.querySelector('span').innerText;
       }
@@ -39,7 +39,7 @@ const keyup = (event) => {
   keys.forEach((k) => {
     if (k.dataset.code === event.code) {
       if (k.dataset.code === 'ShiftLeft' || k.dataset.code === 'ShiftRigth') {
-        isUpperCase = false;
+        isShiftDown = false;
       }
       k.classList.remove('key--active');
     }
@@ -58,13 +58,13 @@ const onClickKey = (event) => {
   } else if (elCode === 'Space') {
     textAria.innerHTML += ' ';
   } else if (elCode === 'ShiftLeft' || elCode === 'ShiftRigth') {
-    isUpperCase = true;
+    isShiftDown = true;
   } else {
-    textAria.innerHTML += isUpperCase
+    textAria.innerHTML += isShiftDown
       ? event.target
-        .closest('div')
-        .querySelector('span')
-        .innerText.toUpperCase()
+          .closest('div')
+          .querySelector('span')
+          .innerText.toUpperCase()
       : event.target.closest('div').querySelector('span').innerText;
   }
 };
