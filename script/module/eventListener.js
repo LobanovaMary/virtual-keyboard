@@ -26,7 +26,9 @@ const checkLang = () => {
   if (isLeftShiftActive && isLeftAltActive) {
     changeLang();
     createKeysWhenShiftPush();
+    return true;
   }
+  return false;
 };
 
 const keydown = (event) => {
@@ -68,15 +70,14 @@ const keydown = (event) => {
           createKeysWhenShiftPush();
         }
       } else if (
-        k.dataset.code === 'ControlLeft' ||
-        k.dataset.code === 'AltRight' ||
-        k.dataset.code === 'ControlRight'
+        k.dataset.code === 'ControlLeft'
+        || k.dataset.code === 'AltRight'
+        || k.dataset.code === 'ControlRight'
       ) {
         event.preventDefault();
       } else {
         k.querySelectorAll('span').forEach((elem) => {
-          if (!elem.classList.contains('hidden'))
-            textAria.innerHTML += elem.innerText;
+          if (!elem.classList.contains('hidden')) textAria.innerHTML += elem.innerText;
         });
       }
     }
@@ -89,11 +90,13 @@ const keyup = (event) => {
   const keys = document.querySelectorAll('.key');
   keys.forEach((k) => {
     if (k.dataset.code === event.code) {
-      if (k.dataset.code === 'ShiftLeft' || k.dataset.code === 'ShiftRight') {
+      if (k.dataset.code === 'ShiftRight') {
         isShiftPush = false;
         createKeysWhenShiftPush();
       } else if (k.dataset.code === 'ShiftLeft') {
         isLeftShiftActive = false;
+        isShiftPush = false;
+        createKeysWhenShiftPush();
       } else if (k.dataset.code === 'AltLeft') {
         isLeftAltActive = false;
       }
@@ -104,6 +107,8 @@ const keyup = (event) => {
 
 const onClickKey = (event) => {
   const textAria = document.querySelector('.text-field');
+  const shiftLeftKey = document.querySelector('.shiftLeft');
+  const altLeftKey = document.querySelector('.altLeft');
   const elCode = event.target.closest('div.key').dataset.code;
   if (elCode === 'Enter') {
     textAria.innerHTML += '&#13;';
@@ -114,12 +119,12 @@ const onClickKey = (event) => {
   } else if (elCode === 'Space') {
     textAria.innerHTML += ' ';
   } else if (
-    elCode === 'ControlLeft' ||
-    elCode === 'AltRight' ||
-    elCode === 'ControlRight'
+    elCode === 'ControlLeft'
+    || elCode === 'AltRight'
+    || elCode === 'ControlRight'
   ) {
     event.target.closest('div.key').preventDefault();
-  } else if (elCode === 'ShiftLeft' || elCode === 'ShiftRight') {
+  } else if (elCode === 'ShiftRight') {
     if (!isShiftPush) {
       event.target.closest('div.key').classList.add('key--active');
       isShiftPush = true;
@@ -129,13 +134,42 @@ const onClickKey = (event) => {
       isShiftPush = false;
       createKeysWhenShiftPush();
     }
+  } else if (elCode === 'ShiftLeft') {
+    if (!isShiftPush) {
+      shiftLeftKey.classList.add('key--active');
+      isShiftPush = true;
+      isLeftShiftActive = true;
+      createKeysWhenShiftPush();
+      const isChange = checkLang();
+      if (isChange) {
+        shiftLeftKey.classList.remove('key--active');
+        altLeftKey.classList.remove('key--active');
+      }
+    } else {
+      event.target.closest('div.key').classList.remove('key--active');
+      isShiftPush = false;
+      isLeftShiftActive = false;
+      createKeysWhenShiftPush();
+    }
+  } else if (elCode === 'AltLeft') {
+    if (!isLeftAltActive) {
+      altLeftKey.classList.add('key--active');
+      isLeftAltActive = true;
+      const isChange = checkLang();
+      if (isChange) {
+        shiftLeftKey.classList.remove('key--active');
+        altLeftKey.classList.remove('key--active');
+      }
+    } else {
+      event.target.closest('div.key').classList.remove('key--active');
+      isLeftAltActive = false;
+    }
   } else {
     event.target
       .closest('div.key')
       .querySelectorAll('span')
       .forEach((elem) => {
-        if (!elem.classList.contains('hidden'))
-          textAria.innerHTML += elem.innerText;
+        if (!elem.classList.contains('hidden')) textAria.innerHTML += elem.innerText;
       });
   }
 };
