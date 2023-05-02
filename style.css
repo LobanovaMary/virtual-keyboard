@@ -85,6 +85,10 @@ body {
   background-color: rgba(253, 104, 246, 0.8156862745);
 }
 
+.key--active:hover {
+  background-color: rgba(253, 104, 246, 0.8156862745);
+}
+
 .backspace {
   grid-column: 14/16;
 }
@@ -122,6 +126,10 @@ body {
 
 .space {
   grid-column: 4/11;
+}
+
+.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
