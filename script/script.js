@@ -2,10 +2,11 @@ import init from './module/init.js';
 import createKeyBoard from './module/createKeyBoard.js';
 import { keydown, keyup, onClickKey } from './module/eventListener.js';
 
-// const options = {
-//   lang: 'eng',
-// };
-
+const checkLocalStoreLang = () => {
+  const language = localStorage.getItem('language') || 'eng';
+  document.querySelector('body').dataset.lang = language;
+};
+checkLocalStoreLang();
 init();
 
 document.addEventListener('load', createKeyBoard());
