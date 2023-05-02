@@ -1,4 +1,9 @@
+import changeLang from './changeLang.js';
+
 let isShiftPush = false;
+
+let isLeftShiftActive = false;
+let isLeftAltActive = false;
 
 const createKeysWhenShiftPush = () => {
   const { lang } = document.querySelector('body').dataset;
@@ -15,6 +20,13 @@ const createKeysWhenShiftPush = () => {
       }
     });
   });
+};
+
+const checkLang = () => {
+  if (isLeftShiftActive && isLeftAltActive) {
+    changeLang();
+    createKeysWhenShiftPush();
+  }
 };
 
 const keydown = (event) => {
@@ -35,12 +47,17 @@ const keydown = (event) => {
         textAria.innerHTML += ' &nbsp;';
       } else if (k.dataset.code === 'Space') {
         textAria.innerHTML += ' ';
-      } else if (
-        k.dataset.code === 'ShiftLeft'
-        || k.dataset.code === 'ShiftRigth'
-      ) {
+      } else if (k.dataset.code === 'ShiftRigth') {
         isShiftPush = true;
         createKeysWhenShiftPush();
+      } else if (k.dataset.code === 'ShiftLeft') {
+        isLeftShiftActive = true;
+        isShiftPush = true;
+        createKeysWhenShiftPush();
+        checkLang();
+      } else if (k.dataset.code === 'AltLeft') {
+        isLeftAltActive = true;
+        checkLang();
       } else if (k.dataset.code === 'CapsLock') {
         if (!isShiftPush) {
           k.classList.add('key--active');
@@ -51,14 +68,15 @@ const keydown = (event) => {
           createKeysWhenShiftPush();
         }
       } else if (
-        k.dataset.code === 'ControlLeft'
-        || k.dataset.code === 'AltRight'
-        || k.dataset.code === 'ControlRight'
+        k.dataset.code === 'ControlLeft' ||
+        k.dataset.code === 'AltRight' ||
+        k.dataset.code === 'ControlRight'
       ) {
         event.preventDefault();
       } else {
         k.querySelectorAll('span').forEach((elem) => {
-          if (!elem.classList.contains('hidden')) textAria.innerHTML += elem.innerText;
+          if (!elem.classList.contains('hidden'))
+            textAria.innerHTML += elem.innerText;
         });
       }
     }
@@ -74,6 +92,10 @@ const keyup = (event) => {
       if (k.dataset.code === 'ShiftLeft' || k.dataset.code === 'ShiftRight') {
         isShiftPush = false;
         createKeysWhenShiftPush();
+      } else if (k.dataset.code === 'ShiftLeft') {
+        isLeftShiftActive = false;
+      } else if (k.dataset.code === 'AltLeft') {
+        isLeftAltActive = false;
       }
       k.classList.remove('key--active');
     }
@@ -92,9 +114,9 @@ const onClickKey = (event) => {
   } else if (elCode === 'Space') {
     textAria.innerHTML += ' ';
   } else if (
-    elCode === 'ControlLeft'
-    || elCode === 'AltRight'
-    || elCode === 'ControlRight'
+    elCode === 'ControlLeft' ||
+    elCode === 'AltRight' ||
+    elCode === 'ControlRight'
   ) {
     event.target.closest('div.key').preventDefault();
   } else if (elCode === 'ShiftLeft' || elCode === 'ShiftRight') {
@@ -112,7 +134,8 @@ const onClickKey = (event) => {
       .closest('div.key')
       .querySelectorAll('span')
       .forEach((elem) => {
-        if (!elem.classList.contains('hidden')) textAria.innerHTML += elem.innerText;
+        if (!elem.classList.contains('hidden'))
+          textAria.innerHTML += elem.innerText;
       });
   }
 };
