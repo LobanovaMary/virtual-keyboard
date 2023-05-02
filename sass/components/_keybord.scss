@@ -39,6 +39,9 @@
   box-shadow: 0px 4px 8px rgba(248, 246, 246, 0.521);
   background-color: #fd68f6d0;
 }
+.key--active:hover {
+  background-color: #fd68f6d0;
+}
 
 .backspace {
   grid-column: 14/16;

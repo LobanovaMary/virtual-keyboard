@@ -433,7 +433,7 @@ const keys = [
   },
   {
     keyEng: 'm',
-    keyEngShift: 'm',
+    keyEngShift: 'M',
     keyRus: 'ь',
     keyRusShift: 'Ь',
     keyCode: 77,

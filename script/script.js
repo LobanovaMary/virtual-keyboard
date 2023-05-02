@@ -4,7 +4,6 @@ import { keydown, keyup, onClickKey } from './module/eventListener.js';
 
 // const options = {
 //   lang: 'eng',
-//   shift: false,
 // };
 
 init();

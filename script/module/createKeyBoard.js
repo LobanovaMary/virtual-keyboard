@@ -6,9 +6,9 @@ const createKeyBoard = () => {
   const htmlKeys = keys
     .map(
       (key) => `<div class='key ${key.class}' data-code='${key.code}'>
-    <span class="eng">${key.keyEng}</span>
+    <span class="eng eng-unshift">${key.keyEng}</span>
     <span class="eng-shift eng hidden">${key.keyEngShift}</span>
-    <span class="rus hidden">${key.keyRus}</span>
+    <span class="rus rus-unshift hidden">${key.keyRus}</span>
     <span class="rus-shift rus hidden">${key.keyRusShift}</span>
     </div>`
     )
