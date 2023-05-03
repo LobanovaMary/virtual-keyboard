@@ -23,12 +23,12 @@ const init = () => {
   const description1 = document.createElement('p');
   const description2 = document.createElement('p');
   description1.appendChild(
-    document.createTextNode('Клавиатура создана в операционной системе Windows')
+    document.createTextNode('Клавиатура создана в операционной системе Windows'),
   );
   description2.appendChild(
     document.createTextNode(
-      'Для переключения языка используйте: левыe Shift + Alt'
-    )
+      'Для переключения языка используйте: левыe Shift + Alt',
+    ),
   );
   description1.classList.add('description');
   description2.classList.add('description');
