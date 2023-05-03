@@ -27,7 +27,7 @@ const init = () => {
   );
   description2.appendChild(
     document.createTextNode(
-      'Для переключения языка используйте: левыe Ctrl + Alt',
+      'Для переключения языка используйте: левыe Shift + Alt',
     ),
   );
   description1.classList.add('description');
